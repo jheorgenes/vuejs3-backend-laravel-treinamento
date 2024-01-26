@@ -31,7 +31,13 @@ Route::post('/user', function(Request $request) {
 
 
 Route::get('/users', function() {
-    return User::all();
+    // return User::all();
+    return User::paginate(10);
+});
+
+Route::get('/users/search', function(Request $request) {
+    $user = $request->input('user');
+    return User::where('firstName', 'like', '%'.$user.'%')->get();
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
